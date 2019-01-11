@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <dirent.h>
 #include <string.h>
 
@@ -35,7 +36,10 @@ int main(int argc, char **argv)
 
 while( (sd=readdir(dir)) != NULL)
 {
-  printf(">> %s \n", sd->d_name);
+  struct stat buf; 
+  stat(sd->d_name, &buf);
+  printf(">>     %s   File size is %10ld\n", sd->d_name, buf.st_size);
+
 }
 closedir(dir);
       return 0;
